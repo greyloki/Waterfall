@@ -1,5 +1,5 @@
-var width = 800,
-height = 600,
+var width = 1000,
+height = 1000,
 gLoop,
 c = document.getElementById('c'),
 ctx = c.getContext('2d'),
@@ -9,7 +9,7 @@ c.width = width;
 c.height = height;
 
 var clear = function(){
-    ctx.fillStyle = '#eeeeee';  //d0e7f9
+    ctx.fillStyle = '#000';  //d0e7f9
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
     ctx.rect(0, 0, width, height);
@@ -42,9 +42,9 @@ var player = new (function(){
     var that = this;
     that.image = new Image();
 
-    that.image.src = "blackbox.png"
-    that.width = 32;
-    that.height = 32;
+    that.image.src = "/images/flyguy.gif"
+    that.width = 16;
+    that.height = 29;
     that.frames = 0;
     that.actualFrame = 0;
     that.X = 0;
@@ -135,73 +135,32 @@ var player = new (function(){
             
         }//end loop
 
-/*            
-        if (that.isJumping){
-            that.Y -= that.jumpSpeed;
-            that.jumpSpeed--;  
-            if (that.jumpSpeed == 0) {  
-                that.isJumping = false;  
-                //that.isFalling = true;  
-                that.fallSpeed = 1;  
-            }  
-        }else{
-            if (that.Y < height - that.height) {
-                that.Y += that.fallSpeed;
-                if(that.fallSpeed <= that.jumpMax){
-                    that.fallSpeed++;    
-                }
-            } else {    //stops at the ground
-                //that.isFalling = false;
-                that.fallSpeed = 0;
-            }              
-        }
-*/        
+  
         if (that.isLeft){
-            that.X -= CheckMove(
-                new Point(that.X-that.moveSpeed, that.Y), 
-		new Point(that.X-that.moveSpeed, that.Y+(that.height/2) ), 
-		new Point(that.X-that.moveSpeed,(that.Y+that.height)),
-		"l",that.moveSpeed 
-	    );
+            if((that.X-that.moveSpeed) >= 0){
+                that.X -= that.moveSpeed;
+            }
         }
         
         if (that.isRight){
-
-            that.X += CheckMove(
-                new Point(that.X+that.width+that.moveSpeed, that.Y), 
-                new Point(that.X+that.width+that.moveSpeed, that.Y+(that.height/2) ), 
-		new Point(that.X+that.width+that.moveSpeed,(that.Y+that.height)),  
-		"r",that.moveSpeed
-	    );            
-            
-            
+            if((that.X+that.width+that.moveSpeed) < width){
+                that.X += that.moveSpeed;
+            }                    
         }
         
         if (that.isUp){
-            that.Y -= CheckMove(
-                new Point(that.X, that.Y-that.moveSpeed), 
-		new Point(that.X+(that.width/2), that.Y-that.moveSpeed), 
-		new Point(that.X+that.width, that.Y-that.moveSpeed),
-		"u",that.moveSpeed
-            );   
+            if((that.Y-that.moveSpeed) >= 0){
+                that.Y -= that.moveSpeed;
+            }   
         }        
         
         if (that.isDown){
-            that.Y +=CheckMove(
-                new Point(that.X, that.Y+that.height+that.moveSpeed), 
-                new Point(that.X+(that.width/2), that.y+that.height+that.moveSpeed), 
-		new Point(that.X+that.width, that.y+that.height+that.moveSpeed),
-		"d",that.moveSpeed  
-	    );    
+            if((that.Y+that.height+that.moveSpeed) < height){
+                that.Y += that.moveSpeed;
+            } 
         }        
         
-        
-        
-        if(that.isJumping || that.isFalling){
-            that.image.src = "greenbox.png";
-        }else{
-            that.image.src = "blackbox.png";
-        }
+
         
         try {
             ctx.drawImage(that.image, 0, that.height * that.actualFrame, that.width, that.height, that.X, that.Y, that.width, that.height);
@@ -321,7 +280,7 @@ var generatePlatforms = function(){
         }
     }
  */
-    platforms[0]=new Platform(20,height-platformHeight-5,0);
+//    platforms[0]=new Platform(20,height-platformHeight-5,0);
 }();
 
 //--------------------------------------------------
